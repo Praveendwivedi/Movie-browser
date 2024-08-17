@@ -1,18 +1,9 @@
-import React, { useCallback, useRef, useState } from "react";
-import logo from "./logo.svg";
+import { useCallback, useRef, useState } from "react";
 import "./App.css";
-import { useLazyGetMoviesByNameQuery } from "./Services/movieApi";
 import useMoviesSearch from "./Services/useMoviesSearch";
-import Card from "@mui/material/Card";
 import {
 	Box,
-	Button,
-	CardActions,
-	CardContent,
-	CardMedia,
-	Typography,
 } from "@mui/material";
-import OutlinedCard from "./CustomCard";
 import MovieCard from "./Components/MovieCard";
 
 const Movies = {
