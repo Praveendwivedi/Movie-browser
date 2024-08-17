@@ -94,7 +94,7 @@ const Movies = {
 };
 
 function App() {
-	const [movieQuery, setMovieQuery] = useState("sweet");
+	const [movieQuery, setMovieQuery] = useState("cold");
 	const [PageNum, setPageNum] = useState(1);
 	const { isError, isLoading, mData } = useMoviesSearch(movieQuery, PageNum);
 
