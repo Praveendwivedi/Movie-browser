@@ -19,14 +19,16 @@ function useMoviesSearch(query: string, pageNum: number) {
 	}, [query]);
 
 	useEffect(() => {
-		let controller = getMoviesTrigger({ name: query, page: pageNum });
+		let controller =  getMoviesTrigger({ name: query, page: pageNum });
 		controller.then((res) =>
 			setMData((prevData) => {
 				if (res.data?.Search) return [...prevData, ...res.data?.Search];
 				return prevData;
 			})
-		);
-		return () => controller.abort();
+		).catch(e=>console.log("Error"));
+		return () => {
+      // controller.abort()
+      };
 	}, [query, pageNum]);
 
 	return { isLoading, isError, mData };
