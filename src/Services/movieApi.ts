@@ -3,7 +3,7 @@ import type { Movies } from "./types";
 
 export const movieApi = createApi({
 	reducerPath: "movieApi",
-	baseQuery: fetchBaseQuery({ baseUrl: `http://www.omdbapi.com` }),
+	baseQuery: fetchBaseQuery({ baseUrl: `https://www.omdbapi.com` }),
 	endpoints: (builder) => ({
 		getMoviesByName: builder.query<Movies, { name: string; page: number }>({
 			query: (payload) =>

@@ -4,19 +4,14 @@ import {
 	CardContent,
 	Typography,
 	CardActions,
-	Button,
-	ButtonBase,
-	Grid,
-	Paper,
 	styled,
+	IconButton,
 } from "@mui/material";
-import React from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import useSaveMovie from "../Services/useSaveMovie";
+import { MovieCardProps } from "../Services/types";
+import { useEffect, useState } from "react";
 
-type MovieCardProps = {
-	title: string;
-	url: string;
-	year: string;
-};
 const Img = styled("img")({
 	margin: "auto",
 	display: "block",
@@ -25,53 +20,38 @@ const Img = styled("img")({
 });
 
 const MovieCard = (props: MovieCardProps) => {
-	return (
-		<Paper
+	const { getMovies, setFavorite, isFavorite, removeFavorite } = useSaveMovie();
+	const [fav, setFav] = useState(isFavorite(props.imdbID));
+	let Movies = getMovies();
+    
+	useEffect(() => {
+		fav ? setFavorite(props) : removeFavorite(props);
         
+		Movies = getMovies();
+        console.log("fav", fav, Movies);
+
+	}, [fav]);
+
+	return (
+		<Card
 			sx={{
-				p: 2,
-				margin: "auto",
-                width:300,
-				flexGrow: 1,
-				backgroundColor: (theme) =>
-					theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+				width: { xs: "auto", sm: 345 },
+				minWidth: { xs: "100%", sm: 300 },
+				height: "100%",
+				marginBottom: 2,
 			}}
 		>
-			<Grid container spacing={2}>
-				<Grid item>
-					<ButtonBase sx={{ width: 200, height: 150 }}>
-						<Img alt="complex" src={props.url} />
-					</ButtonBase>
-				</Grid>
-				<Grid item xs={"auto"} sm container>
-					<Grid item xs container direction="column" spacing={2}>
-						<Grid item xs>
-							<Typography gutterBottom variant="subtitle1" component="div">
-								{props.title}
-							</Typography>
-							<Typography variant="body2" color="text.secondary">
-								Year: {props.year}
-							</Typography>
-						</Grid>
-						<Grid item>
-							<Typography sx={{ cursor: "pointer" }} variant="body2">
-								Remove
-							</Typography>
-						</Grid>
-					</Grid>
-				</Grid>
-			</Grid>
-		</Paper>
-	);
-	return (
-		<Card sx={{ height: "auto", width: 200 }}>
 			<CardMedia
-				sx={{ width: 200, height: 300 }}
+				component="img"
+				alt={props.title}
+				sx={{
+					height: { xs: "auto", sm: 500 },
+					objectFit: "contain",
+				}}
 				image={props.url}
-				title={props.title}
 			/>
 			<CardContent>
-				<Typography gutterBottom variant="subtitle1" component="div">
+				<Typography variant="h6" component="div" align="center">
 					{props.title}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
@@ -79,8 +59,13 @@ const MovieCard = (props: MovieCardProps) => {
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<Button size="small">Share</Button>
-				<Button size="small">Learn More</Button>
+				<IconButton
+					aria-label="favorite"
+					color={fav ? "warning" : "primary"}
+					onClick={() => setFav(!fav)}
+				>
+					<FavoriteIcon />
+				</IconButton>
 			</CardActions>
 		</Card>
 	);
