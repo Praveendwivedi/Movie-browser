@@ -23,6 +23,8 @@ function useMoviesSearch(query: string, pageNum: number) {
 		let controller =  getMoviesTrigger({ name: query, page: pageNum });
 		controller.then((res) =>
 			setMData((prevData) => {
+        console.log("setm",res, prevData);
+        
 				if (res.data?.Search) return [...prevData, ...res.data?.Search];
 				return prevData;
 			})

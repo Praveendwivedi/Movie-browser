@@ -135,13 +135,15 @@ function MovieBrowser() {
 				{mData.map((data, index) => {
 					if (index === mData.length - 1)
 						return (
-							<MovieCard
-								title={data.Title}
-								url={data.Poster}
-								year={data.Year}
-								key={data.imdbID}
-								imdbID={data.imdbID}
-							/>
+							<div ref={lastMovieCardRef}>
+								<MovieCard
+									title={data.Title}
+									url={data.Poster}
+									year={data.Year}
+									key={data.imdbID}
+									imdbID={data.imdbID}
+								/>
+							</div>
 						);
 					return (
 						<MovieCard
