@@ -1,11 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import "./App.css";
 import useMoviesSearch from "./Services/useMoviesSearch";
-import {
-	Box,
-  CircularProgress,
-  Grid,
-} from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import MovieCard from "./Components/MovieCard";
 import SearchAppBar from "./Components/SearchAppBar";
 import LoadingCard from "./Components/LoadingCard";
@@ -100,7 +96,10 @@ const Movies = {
 function MovieBrowser() {
 	const [movieQuery, setMovieQuery] = useState("summer");
 	const [PageNum, setPageNum] = useState(1);
-	const { isError, isLoading, mData, loading } = useMoviesSearch(movieQuery, PageNum);
+	const { isError, isLoading, mData, loading } = useMoviesSearch(
+		movieQuery,
+		PageNum
+	);
 
 	const observer = useRef<any>();
 	const lastMovieCardRef = useCallback((element: any) => {
@@ -121,19 +120,28 @@ function MovieBrowser() {
 	};
 	return (
 		<div className="App">
-      <SearchAppBar value={movieQuery} onChange={handleChange}/>
-			<Box style={{display:"flex", justifyContent:"flex-start", padding:20, paddingTop:70, flexDirection:"row", flexWrap:"wrap", gap:10}}>
-      {/* <Grid container spacing={2} sx={{paddingTop:10}}> */}
-				{Movies.Search.map((data, index) => {
-					if (index === Movies.Search.length - 1)
+			<SearchAppBar value={movieQuery} onChange={handleChange} />
+			<Box
+				style={{
+					display: "flex",
+					justifyContent: "flex-start",
+					padding: 20,
+					paddingTop: 70,
+					flexDirection: "row",
+					flexWrap: "wrap",
+					gap: 10,
+				}}
+			>
+				{mData.map((data, index) => {
+					if (index === mData.length - 1)
 						return (
-								<MovieCard
-									title={data.Title}
-									url={data.Poster}
-									year={data.Year}
-									key={data.imdbID}
-                  imdbID={data.imdbID}
-								/>
+							<MovieCard
+								title={data.Title}
+								url={data.Poster}
+								year={data.Year}
+								key={data.imdbID}
+								imdbID={data.imdbID}
+							/>
 						);
 					return (
 						<MovieCard
@@ -141,11 +149,11 @@ function MovieBrowser() {
 							url={data.Poster}
 							year={data.Year}
 							key={data.imdbID}
-              imdbID={data.imdbID}
+							imdbID={data.imdbID}
 						/>
 					);
 				})}
-			{true && <LoadingCard/>}
+				{true && <LoadingCard />}
 			</Box>
 			{isError && <p>Error!</p>}
 		</div>
